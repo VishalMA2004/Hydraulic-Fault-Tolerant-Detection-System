@@ -9,7 +9,8 @@ from langchain_core.output_parsers import StrOutputParser
 
 from prompts import get_rag_prompt_template
 
-VECTOR_DB_PATH = "../data/vector_store"
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VECTOR_DB_PATH = os.path.join(_ROOT, "data", "vector_store")
 EMBEDDING_MODEL_NAME = "BAAI/bge-large-en-v1.5"
 
 class RAGEngine:

@@ -7,8 +7,10 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 
 # Configuration
-DATA_DIR = "../data/pdfs"
-VECTOR_DB_PATH = "../data/vector_store"
+import os
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(_ROOT, "data", "pdfs")
+VECTOR_DB_PATH = os.path.join(_ROOT, "data", "vector_store")
 EMBEDDING_MODEL_NAME = "BAAI/bge-large-en-v1.5"
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 100

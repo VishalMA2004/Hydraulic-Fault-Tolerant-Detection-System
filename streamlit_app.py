@@ -2,12 +2,12 @@ import streamlit as st
 import sys
 import os
 
-# Ensure src directory is in python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Add src to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from src.data_ingestion import DataIngestionPipeline
-from src.rag_engine import RAGEngine
-from src.main import MockHydraulicLLM, GeminiHydraulicLLM
+from data_ingestion import DataIngestionPipeline
+from rag_engine import RAGEngine
+from main import MockHydraulicLLM, GeminiHydraulicLLM
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -43,7 +43,11 @@ with st.sidebar:
                 st.error(f"Error during ingestion: {e}")
 
 # Main Chat Interface
-input_symptom = st.text_area("Descolibe the hydraulic symptom:", height=100, placeholder="e.g., Pump is making cavitating noise and system pressure is fluctuating...")
+input_symptom = st.text_area(
+    "Describe the hydraulic symptom:",
+    height=100,
+    placeholder="e.g., Pump is making cavitating noise and system pressure is fluctuating..."
+)
 
 if st.button("🔍 Diagnose Fault", type="primary"):
     if not input_symptom:
@@ -66,7 +70,7 @@ if st.button("🔍 Diagnose Fault", type="primary"):
                 st.subheader("📋 Diagnostic Report")
                 st.markdown(response)
                 
-            except FileNotFoundError:
+            except FileNotFoundError as e:
                 st.error("🚨 Vector Store not found! Please run 'Data Ingestion' from the sidebar first.")
             except Exception as e:
                 st.error(f"An error occurred: {e}")
